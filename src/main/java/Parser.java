@@ -5,7 +5,9 @@ public class Parser {
         return split[0];
     }
 
-    public Object parseAttribute(String input) {
+    public String parseAttribute(String input) {
         return input.substring(2);
     }
+
+
 }
