@@ -1,8 +1,6 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskManagerTest {
 
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-
-    @BeforeEach
-    public void setup() throws Exception {
-        Field iteration = Task.class.getDeclaredField("iteration");
-        iteration.setAccessible(true); //to overcome the visibility issue
-        iteration.setInt(null, 1); //null since it's static
-    }
-
 
     @Test
     void should_be_able_to_add_task_from_entry() {
@@ -31,22 +21,24 @@ public class TaskManagerTest {
 
     @Test
     void should_add_an_id_when_creating_a_task() {
-        Task task = new Task("description");
+        TaskManager manager = new TaskManager();
+        manager.manage("+", "test");
 
-        assertEquals(1, task.getId());
+        assertEquals(1, manager.getTasks().get(0).getId());
     }
 
     @Test
     void two_tasks_should_not_have_same_id() {
-        Task task = new Task("description");
-        Task task2 = new Task("description2");
+        TaskManager manager = new TaskManager();
+        manager.manage("+", "test1");
+        manager.manage("+", "test2");
 
-        assertTrue(task.getId() != task2.getId());
+        assertTrue(manager.getTasks().get(0).getId() != manager.getTasks().get(1).getId());
     }
 
     @Test
     void should_remove_a_task_with_an_id_in_entry() {
-        Task task = new Task("description");
+        Task task = new Task(1, "description");
         TaskManager manager = new TaskManager(new ArrayList<Task>() {{
             add(task);
         }});
@@ -76,4 +68,6 @@ public class TaskManagerTest {
 
         assertEquals("to do", manager.getTasks().get(0).getStatus());
     }
+
+
 }

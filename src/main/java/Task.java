@@ -4,12 +4,13 @@ public class Task {
     private String status;
     private int id;
 
-    private static int iteration=1;
+    public Task(int id, String description) {
+        this.description = description;
+        this.id = id;
+    }
 
     public Task(String description) {
         this.description = description;
-        this.id = iteration;
-        iteration++;
     }
 
     public int getId() {

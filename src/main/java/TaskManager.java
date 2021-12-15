@@ -6,6 +6,16 @@ public class TaskManager {
 
     private List<Task> tasks = new ArrayList<>();
 
+    private int iteration=1;
+
+    public int getIteration() {
+        return iteration;
+    }
+
+    public void incrementIteration() {
+        this.iteration++;
+    }
+
     protected TaskManager(List<Task> tasks) {
         this.tasks = tasks;
     }

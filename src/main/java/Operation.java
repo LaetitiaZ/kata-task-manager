@@ -5,7 +5,8 @@ public enum Operation {
     ADD("+") {
         @Override
         public void apply(String description, String attribute) {
-            getTasks().add(new Task(attribute));
+            getTasks().add(new Task(getManager().getIteration(), attribute));
+            getManager().incrementIteration();
         }
     },
     REMOVE("-") {
@@ -52,6 +53,10 @@ public enum Operation {
 
     public List<Task> getTasks() {
         return manager.getTasks();
+    }
+
+    public TaskManager getManager() {
+        return manager;
     }
 
     public abstract void apply(String description, String attribute);
