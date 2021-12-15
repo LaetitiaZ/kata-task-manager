@@ -24,6 +24,10 @@ public class TaskManager {
             int id = Integer.parseInt(attribute);
             tasks.get(id-1).setStatus("done");
         }
+        else if(operation.equals("o")) {
+            int id = Integer.parseInt(attribute);
+            tasks.get(id-1).setStatus("to do");
+        }
     }
 
     public List<Task> getTasks() {

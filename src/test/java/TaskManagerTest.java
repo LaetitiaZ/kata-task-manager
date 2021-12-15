@@ -41,7 +41,7 @@ public class TaskManagerTest {
     }
 
     @Test
-    void should_set_status_of_a_task() {
+    void should_set_status_of_a_task_to_done_when_x_operator() {
         Task task = new Task("description");
         TaskManager manager = new TaskManager(new ArrayList<Task>(){{add(task);}});
         manager.manage("x", "1");
@@ -49,5 +49,13 @@ public class TaskManagerTest {
         assertEquals(manager.getTasks().get(0).getStatus(), "done");
     }
 
+    @Test
+    void should_set_status_of_a_task_to_todo_when_o_operator() {
+        Task task = new Task("description");
+        TaskManager manager = new TaskManager(new ArrayList<Task>(){{add(task);}});
+        manager.manage("o", "1");
+
+        assertEquals(manager.getTasks().get(0).getStatus(), "to do");
+    }
 
 }
