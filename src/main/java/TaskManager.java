@@ -1,10 +1,13 @@
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class TaskManager {
 
     private List<Task> tasks = new ArrayList<>();
+    private Scanner scanner;
 
     private int iteration=1;
 
@@ -21,6 +24,11 @@ public class TaskManager {
     }
 
     public TaskManager() {
+        this(System.in);
+    }
+
+    public TaskManager(InputStream inputStream) {
+        this.scanner = new Scanner(inputStream);
     }
 
     public void manage(String operator, String attribute) {
@@ -33,7 +41,23 @@ public class TaskManager {
         operation.apply(operator, attribute);
     }
 
+    public void displayTasks(){
+        for(Task task : this.getTasks()) {
+            System.out.println(task);
+        }
+    }
+
     public List<Task> getTasks() {
         return tasks;
     }
+
+
+    public void run() {
+        String input = scanner.nextLine();
+        Parser parser = new Parser();
+        manage(parser.parseOperation(input), parser.parseAttribute(input));
+
+        displayTasks();
+    }
+
 }

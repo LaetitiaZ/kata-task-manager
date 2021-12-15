@@ -1,6 +1,9 @@
+import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskManagerTest {
 
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {System.setOut(new PrintStream(outputStreamCaptor));}
 
     @Test
     void should_be_able_to_add_task_from_entry() {
@@ -69,5 +75,12 @@ public class TaskManagerTest {
         assertEquals("to do", manager.getTasks().get(0).getStatus());
     }
 
+    @Test
+    void should_display_task_when_added() {
+        TaskManager manager = new TaskManager(IOUtils.toInputStream("+ test"));
+
+        manager.run();
+        assertTrue(outputStreamCaptor.toString().contains("1 [ ] test"));
+    }
 
 }
