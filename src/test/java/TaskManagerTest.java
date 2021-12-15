@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +12,7 @@ public class TaskManagerTest {
     @Test
     void should_be_able_to_add_task_from_entry() {
         TaskManager manager = new TaskManager();
-        manager.manage("+","test test");
+        manager.manage("+", "test test");
         List<Task> tasks = manager.getTasks();
 
         assertNotNull(tasks.get(0));
@@ -28,5 +31,16 @@ public class TaskManagerTest {
         Task task2 = new Task("description2");
 
         assertTrue(task.getId() != task2.getId());
+    }
+
+    @Test
+    void should_remove_a_task_with_an_id_in_entry() {
+        Task task = new Task("description");
+        List<Task> initialTasks = new ArrayList<>();
+        initialTasks.add(task);
+        TaskManager manager = new TaskManager( initialTasks);
+        manager.manage("-", "1");
+
+        assertTrue(manager.getTasks().isEmpty());
     }
 }
