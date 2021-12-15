@@ -1,8 +1,6 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,11 +34,20 @@ public class TaskManagerTest {
     @Test
     void should_remove_a_task_with_an_id_in_entry() {
         Task task = new Task("description");
-        List<Task> initialTasks = new ArrayList<>();
-        initialTasks.add(task);
-        TaskManager manager = new TaskManager( initialTasks);
+        TaskManager manager = new TaskManager(new ArrayList<Task>(){{add(task);}});
         manager.manage("-", "1");
 
         assertTrue(manager.getTasks().isEmpty());
     }
+
+    @Test
+    void should_set_status_of_a_task() {
+        Task task = new Task("description");
+        TaskManager manager = new TaskManager(new ArrayList<Task>(){{add(task);}});
+        manager.manage("x", "1");
+
+        assertEquals(manager.getTasks().get(0).getStatus(), "done");
+    }
+
+
 }

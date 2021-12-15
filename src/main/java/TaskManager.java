@@ -20,6 +20,10 @@ public class TaskManager {
             int id = Integer.parseInt(attribute);
             tasks.remove(id-1);
         }
+        else if(operation.equals("x")) {
+            int id = Integer.parseInt(attribute);
+            tasks.get(id-1).setStatus("done");
+        }
     }
 
     public List<Task> getTasks() {
