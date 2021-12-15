@@ -10,7 +10,7 @@ public class ParserTest {
         Parser parser = new Parser();
         String operation = parser.parseOperation(input);
 
-        assertEquals(operation, "+");
+        assertEquals("+", operation);
     }
 
     @Test
@@ -19,7 +19,7 @@ public class ParserTest {
         Parser parser = new Parser();
         String operation = parser.parseOperation(input);
 
-        assertEquals(operation, "-");
+        assertEquals("-", operation);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ParserTest {
         Parser parser = new Parser();
         String operation = parser.parseOperation(input);
 
-        assertEquals(operation, "o");
+        assertEquals("o", operation);
     }
 
     @Test
@@ -46,8 +46,7 @@ public class ParserTest {
         Parser parser = new Parser();
         String attribute = parser.parseAttribute(input);
 
-        assertEquals(attribute, "test test");
+        assertEquals("test test", attribute);
     }
-
 
 }
