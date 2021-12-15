@@ -14,7 +14,9 @@ public class TaskManagerTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @BeforeEach
-    public void setUp() {System.setOut(new PrintStream(outputStreamCaptor));}
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
 
     @Test
     void should_be_able_to_add_task_from_entry() {
@@ -78,9 +80,44 @@ public class TaskManagerTest {
     @Test
     void should_display_task_when_added() {
         TaskManager manager = new TaskManager(IOUtils.toInputStream("+ test"));
+        manager.run();
+
+        assertTrue(outputStreamCaptor.toString().contains("1 [ ] test"));
+    }
+
+    @Test
+    void should_display_all_tasks_when_added() {
+
+        Task task = new Task(0, "test");
+        TaskManager manager = new TaskManager(new ArrayList<Task>() {{
+            add(task);
+        }}, IOUtils.toInputStream("+ test"));
 
         manager.run();
-        assertTrue(outputStreamCaptor.toString().contains("1 [ ] test"));
+
+        assertTrue(outputStreamCaptor.toString().contains("0 [ ] test\r\n1 [ ] test"));
+    }
+
+    @Test
+    void should_add_x_symbol_in_display_when_task_done() {
+
+        Task task = new Task(1, "test");
+        TaskManager manager = new TaskManager(new ArrayList<Task>() {{
+            add(task);
+        }}, IOUtils.toInputStream("x 1"));
+
+        manager.run();
+
+        assertTrue(outputStreamCaptor.toString().contains("1 [x] test"));
+    }
+
+    @Test
+    void should_quit_program_when_input_is_q() {
+        TaskManager manager = new TaskManager(IOUtils.toInputStream("q"));
+
+        manager.run();
+
+        assertTrue(outputStreamCaptor.toString().contains("Closing Task Manager"));
     }
 
 }

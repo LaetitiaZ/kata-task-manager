@@ -29,11 +29,6 @@ public enum Operation {
             int id = Integer.parseInt(attribute);
             getTasks().get(id-1).setStatus("done");
         }
-    },
-    QUIT("q") {
-        @Override
-        public void apply(String description, String attribute) {
-        }
     };
 
     private String operator;

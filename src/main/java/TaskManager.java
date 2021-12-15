@@ -23,6 +23,11 @@ public class TaskManager {
         this.tasks = tasks;
     }
 
+    public TaskManager(List<Task> tasks, InputStream inputStream) {
+        this.tasks = tasks;
+        this.scanner = new Scanner(inputStream);
+    }
+
     public TaskManager() {
         this(System.in);
     }
@@ -54,10 +59,17 @@ public class TaskManager {
 
     public void run() {
         String input = scanner.nextLine();
-        Parser parser = new Parser();
-        manage(parser.parseOperation(input), parser.parseAttribute(input));
+        while(!input.equals("q")) {
+            Parser parser = new Parser();
+            manage(parser.parseOperation(input), parser.parseAttribute(input));
 
-        displayTasks();
+            displayTasks();
+            if(!scanner.hasNextLine()) {
+                break;
+            }
+            input = scanner.nextLine();
+        }
+        System.out.println("Closing Task Manager");
     }
 
 }
